@@ -26,6 +26,8 @@ public class RemoteFileUtility {
     String gsDomain = "";
 
     public void setRemoteFileUtility(String username, String password, String smb, String domain) {
+        System.out.println("Setting parameters...");
+        
         this.gsUsername = username;
         this.gsPassword = password;
         this.gsSMB = smb;
@@ -73,6 +75,8 @@ public class RemoteFileUtility {
         Boolean canList = false;
         Boolean canDelete = false;
         
+        System.out.println("Testing Remote Access...");
+
         String sReturn = "";
         
         String remoteShareUrl = "smb://";
@@ -184,6 +188,7 @@ public class RemoteFileUtility {
             sReturn += "  Failed: " + e.getLocalizedMessage() + "\n";
         }
         
+        System.out.println(sReturn);
         return sReturn;
     }
     
