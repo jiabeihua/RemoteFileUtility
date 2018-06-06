@@ -80,8 +80,6 @@ public class RemoteFileUtility {
         String sTestFilename = "";
         String sTestContent = "This is a test file.";
         
-        sReturn = "Test Write Access:\n";
-        
         if (gsDomain.isEmpty()) {
             remoteShareUrl += this.gsUsername + ":" + this.gsPassword + "@" + this.gsSMB;
         }
@@ -89,11 +87,12 @@ public class RemoteFileUtility {
             remoteShareUrl += this.gsDomain + ";" + this.gsUsername + ":" + this.gsPassword + "@" + this.gsSMB;
         }
         
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        sTestFilename = "TEST" + fmt.format(new Date()) + ".txt";
+        String writeURL = remoteShareUrl + sTestFilename;
+        
+        sReturn = "Test Write Access[" + sTestFilename + "]:\n";
         try {
-            SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            sTestFilename = "TEST" + fmt.format(new Date()) + ".txt";
-            String writeURL = remoteShareUrl + sTestFilename;
-            //System.out.println(writeURL);
             SmbFile remoteWriteFile = new SmbFile(writeURL);
             remoteWriteFile.connect();
             
@@ -137,7 +136,7 @@ public class RemoteFileUtility {
             sReturn += "  Failed: " + e.getLocalizedMessage() + "\n";
         }
         
-        sReturn += "Test Read Access:\n";
+        sReturn += "Test Read Access[" + sTestFilename + "]:\n";
         InputStream in = null;
         ByteArrayOutputStream output = null;
         String readURL = remoteShareUrl + sTestFilename;
@@ -172,7 +171,7 @@ public class RemoteFileUtility {
             catch (Exception e) {}
         }
         
-        sReturn += "Test Delete Access:\n";
+        sReturn += "Test Delete Access[" + sTestFilename + "]:\n";
         try {
             SmbFile remoteDeleteFile = new SmbFile(readURL);
             remoteDeleteFile.connect();
